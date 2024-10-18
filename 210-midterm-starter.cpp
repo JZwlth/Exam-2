@@ -6,7 +6,6 @@
 
 using namespace std;
 
-const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
 class DoublyLinkedList {
 private:
@@ -146,7 +145,7 @@ public:
             return;
         }
 
-        Node * temp = head;
+        Node* temp = head;
 
         if (head->next) {
             head = head->next;
@@ -162,7 +161,7 @@ public:
             cout << "List is empty." << endl;
             return;
         }
-        Node * temp = tail;
+        Node* temp = tail;
 
         if (tail->prev) {
             tail = tail->prev;
@@ -188,10 +187,9 @@ public:
             return;
         }
         while (current) {
-            cout << current->data << " ";
+            cout << "\t" << current->data << endl;
             current = current->next;
         }
-        cout << endl;
     }
 
     void print_reverse() {
@@ -206,11 +204,29 @@ public:
         }
         cout << endl;
     }
+
+    Node* getHead() {
+        return head;
+    }
+
+    Node* getTail() {
+        return tail;
+    }
+
+    void remove(Node* node) {
+
+    }
 };
 
 int main() {
     vector<string> names;
-    ifs
+    ifstream namesFile("names.txt");
+    string name;
+    while (getline(namesFile, name)) {
+        if (!name.empty())
+            names.push_back(name);
+    }
+    namesFile.close();
 
     
     return 0;
