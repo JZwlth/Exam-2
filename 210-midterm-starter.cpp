@@ -28,98 +28,7 @@ private:
     
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
-
-    void insert_after(int value, int position) {
-        if (position < 0) {
-            cout << "Position must be >= 0." << endl;
-            return;
-        }
-
-        Node* newNode = new Node(value);
-        if (!head) {
-            head = tail = newNode;
-            return;
-        }
-
-        Node* temp = head;
-        for (int i = 0; i < position && temp; ++i)
-            temp = temp->next;
-
-        if (!temp) {
-            cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
-            return;
-        }
-
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next)
-            temp->next->prev = newNode;
-        else
-            tail = newNode;
-        temp->next = newNode;
-    }
-
-    void delete_val(int value) {
-        if (!head) return;
-
-        Node* temp = head;
-        
-        while (temp && temp->data != value)
-            temp = temp->next;
-
-        if (!temp) return; 
-
-        if (temp->prev)
-            temp->prev->next = temp->next;
-        else
-            head = temp->next; 
-
-        if (temp->next)
-            temp->next->prev = temp->prev;
-        else
-            tail = temp->prev; 
-
-        delete temp;
-    }
-
-    void delete_pos(int pos) {
-        if (!head) {
-            cout << "List is empty." << endl;
-            return;
-        }
     
-        if (pos == 1) {
-            pop_front();
-            return;
-        }
-    
-        Node* temp = head;
-    
-        for (int i = 1; i < pos; i++){
-            if (!temp) {
-                cout << "Position doesn't exist." << endl;
-                return;
-            }
-            else
-                temp = temp->next;
-        }
-        if (!temp) {
-            cout << "Position doesn't exist." << endl;
-            return;
-        }
-    
-        if (!temp->next) {
-            pop_back();
-            return;
-        }
-    
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
-    }
-
     void push_back(int v) {
         Node* newNode = new Node(v);
         if (!tail)
@@ -279,8 +188,50 @@ int main() {
             // Customer is served
             if (line.getHead()) {
                 string servedCustomer = line.getHead()->data;
-                line.pop_front
+                line.pop_front();
+                cout << "\t" << servedCustomer << " is served" << endl;
             }
+        }
+
+        // Event B: New customer joins at end (60%)
+        randNum = rand() % 100 + 1;
+        if (randNum <= 60) {
+            // New customer joins
+            int index = rand() % names.size();
+            string customerName = names[index];
+            line.push_back(customerName);
+            cout << "\t" << customerName << " joins the line" << endl;
+        }
+
+        // Event E: VIP customer joins front (10%)
+        randNum = rand() % 100 + 1;
+        if (randNum <= 10) {
+            // VIP customer joins front
+            string vipCustomer = names[index];
+            line.push_front(vipCustomer);
+            cout << "\t" << vipCustomer << " (VIP) joins the front of the line" << endl;
+        }
+
+        // Event C: Customer at end leaves (20%)
+        randNum = rand() % 100 + 1;
+        if (randNum <= 20) {
+            // Customer at end leaves
+            if (line.getTail()) {
+                line.pop_back();
+                cout << "\t" << leavingCustomer << " exits the rear of the line" << endl;
+            }
+        }
+
+        // Event D: Any customer decides to leave (10% per customer)
+        current = line.getHead();
+        while (current) {
+            randNum = rand() % 100 + 1;
+            if (randNum <= 10) {
+                // Customer decides to leave
+                cout << "\t" << current->data << " left the line" << endl;
+                line.remove(current);
+            }
+            current = next;
         }
 
     
