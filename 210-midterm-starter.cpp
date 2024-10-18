@@ -3,6 +3,8 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -227,6 +229,31 @@ int main() {
             names.push_back(name);
     }
     namesFile.close();
+
+    // Initialize random number generator
+    srand(time(NULL));
+
+    // Declare the line
+    DoublyLinkedList line;
+
+    // Store opens
+    cout << "Store opens:" << endl;
+
+    // Add 5 customers to the line
+    for (int i = 0; i < 6; ++i) {
+        // Pick a random name
+        int index = rand() % names.size();
+        string customerName = names[index];
+        line.push_back(customerName);
+        cout << "\t" << customerName << " joins the line" << endl;
+    }
+    
+    // Output the resulting line
+    cout << "Resulting line:" << endl;
+    DoublyLinkedList::Node* current = line.getHead();
+    while (current) {
+        cout << "\t" << current->data << endl;
+        current = cur
 
     
     return 0;
