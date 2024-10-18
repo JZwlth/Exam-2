@@ -1,13 +1,11 @@
-// COMSC-210 | Exam 2 | Zhaoyi Zheng
 #include <iostream>
-#include <string>
 #include <fstream>
 #include <vector>
+#include <string>
 #include <cstdlib>
 #include <ctime>
 
 using namespace std;
-
 
 class DoublyLinkedList {
 public:
@@ -25,11 +23,11 @@ public:
 private:
     Node* head;
     Node* tail;
-    
+
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
-    
-    void push_back(int v) {
+
+    void push_back(string v) {
         Node* newNode = new Node(v);
         if (!tail)
             head = tail = newNode;
@@ -39,8 +37,8 @@ public:
             tail = newNode;
         }
     }
-    
-    void push_front(int v) {
+
+    void push_front(string v) {
         Node* newNode = new Node(v);
         if (!head)
             head = tail = newNode;
@@ -50,10 +48,9 @@ public:
             head = newNode;
         }
     }
-    
+
     void pop_front() {
         if (!head) {
-            cout << "List is empty." << endl;
             return;
         }
 
@@ -70,7 +67,6 @@ public:
 
     void pop_back() {
         if (!tail) {
-            cout << "List is empty." << endl;
             return;
         }
         Node* temp = tail;
@@ -104,19 +100,6 @@ public:
         }
     }
 
-    void print_reverse() {
-        Node* current = tail;
-        if (!current) { 
-            cout << "List is empty." << endl;
-            return;
-        }
-        while (current) {
-            cout << current->data << " ";
-            current = current->prev;
-        }
-        cout << endl;
-    }
-
     Node* getHead() {
         return head;
     }
@@ -126,11 +109,23 @@ public:
     }
 
     void remove(Node* node) {
+        if (!node) return;
+        if (node->prev)
+            node->prev->next = node->next;
+        else
+            head = node->next;
 
+        if (node->next)
+            node->next->prev = node->prev;
+        else
+            tail = node->prev;
+
+        delete node;
     }
 };
 
 int main() {
+    // Read names from names.txt
     vector<string> names;
     ifstream namesFile("names.txt");
     string name;
@@ -157,7 +152,7 @@ int main() {
         line.push_back(customerName);
         cout << "\t" << customerName << " joins the line" << endl;
     }
-    
+
     // Output the resulting line
     cout << "Resulting line:" << endl;
     DoublyLinkedList::Node* current = line.getHead();
@@ -166,22 +161,10 @@ int main() {
         current = current->next;
     }
 
-        // Time steps from 2 to 20
+    // Simulate time steps from 2 to 20
     for (int timeStep = 2; timeStep <= 20; ++timeStep) {
         cout << "Time step #" << timeStep << ":" << endl;
 
-        // Output the resulting line
-        cout << "Result line:" << endl;
-        current = line.getHead();
-        if (!current) {
-            cout << "\tLine is empty" << endl;
-        }
-        while (current) {
-            cout << "\t" << current->data << endl;
-            current = current->next;
-        }
-    }
-    
         // Event A: Customer at front is served (40%)
         int randNum = rand() % 100 + 1;
         if (randNum <= 40) {
@@ -203,20 +186,12 @@ int main() {
             cout << "\t" << customerName << " joins the line" << endl;
         }
 
-        // Event E: VIP customer joins front (10%)
-        randNum = rand() % 100 + 1;
-        if (randNum <= 10) {
-            // VIP customer joins front
-            string vipCustomer = names[index];
-            line.push_front(vipCustomer);
-            cout << "\t" << vipCustomer << " (VIP) joins the front of the line" << endl;
-        }
-
         // Event C: Customer at end leaves (20%)
         randNum = rand() % 100 + 1;
         if (randNum <= 20) {
             // Customer at end leaves
             if (line.getTail()) {
+                string leavingCustomer = line.getTail()->data;
                 line.pop_back();
                 cout << "\t" << leavingCustomer << " exits the rear of the line" << endl;
             }
@@ -225,6 +200,7 @@ int main() {
         // Event D: Any customer decides to leave (10% per customer)
         current = line.getHead();
         while (current) {
+            DoublyLinkedList::Node* next = current->next;
             randNum = rand() % 100 + 1;
             if (randNum <= 10) {
                 // Customer decides to leave
@@ -234,6 +210,27 @@ int main() {
             current = next;
         }
 
-    
+        // Event E: VIP customer joins front (10%)
+        randNum = rand() % 100 + 1;
+        if (randNum <= 10) {
+            // VIP customer joins front
+            int index = rand() % names.size();
+            string vipCustomer = names[index];
+            line.push_front(vipCustomer);
+            cout << "\t" << vipCustomer << " (VIP) joins the front of the line" << endl;
+        }
+
+        // Output the resulting line
+        cout << "Resulting line:" << endl;
+        current = line.getHead();
+        if (!current) {
+            cout << "\tLine is empty" << endl;
+        }
+        while (current) {
+            cout << "\t" << current->data << endl;
+            current = current->next;
+        }
+    }
+
     return 0;
 }
