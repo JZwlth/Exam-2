@@ -1,5 +1,9 @@
 // COMSC-210 | Exam 2 | Zhaoyi Zheng
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -7,11 +11,11 @@ const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 class DoublyLinkedList {
 private:
     struct Node {
-        int data;
+        string data;
         Node* prev;
         Node* next;
-        Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val; 
+        Node(string val, Node* p = nullptr, Node* n = nullptr) {
+            data = val;
             prev = p;
             next = n;
         }
@@ -19,7 +23,7 @@ private:
 
     Node* head;
     Node* tail;
-
+    
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
@@ -137,7 +141,6 @@ public:
     }
     
     void pop_front() {
-
         if (!head) {
             cout << "List is empty." << endl;
             return;
@@ -177,6 +180,7 @@ public:
             delete temp;
         }
     }
+
     void print() {
         Node* current = head;
         if (!current) {
@@ -205,7 +209,8 @@ public:
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    vector<string> names;
+    ifs
 
     
     return 0;
