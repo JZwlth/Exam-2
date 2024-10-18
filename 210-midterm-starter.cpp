@@ -10,7 +10,7 @@ using namespace std;
 
 
 class DoublyLinkedList {
-private:
+public:
     struct Node {
         string data;
         Node* prev;
@@ -22,6 +22,7 @@ private:
         }
     };
 
+private:
     Node* head;
     Node* tail;
     
@@ -240,7 +241,7 @@ int main() {
     cout << "Store opens:" << endl;
 
     // Add 5 customers to the line
-    for (int i = 0; i < 6; ++i) {
+    for (int i = 0; i < 5; ++i) {
         // Pick a random name
         int index = rand() % names.size();
         string customerName = names[index];
@@ -253,7 +254,34 @@ int main() {
     DoublyLinkedList::Node* current = line.getHead();
     while (current) {
         cout << "\t" << current->data << endl;
-        current = cur
+        current = current->next;
+    }
+
+        // Time steps from 2 to 20
+    for (int timeStep = 2; timeStep <= 20; ++timeStep) {
+        cout << "Time step #" << timeStep << ":" << endl;
+
+        // Output the resulting line
+        cout << "Result line:" << endl;
+        current = line.getHead();
+        if (!current) {
+            cout << "\tLine is empty" << endl;
+        }
+        while (current) {
+            cout << "\t" << current->data << endl;
+            current = current->next;
+        }
+    }
+    
+        // Event A: Customer at front is served (40%)
+        int randNum = rand() % 100 + 1;
+        if (randNum <= 40) {
+            // Customer is served
+            if (line.getHead()) {
+                string servedCustomer = line.getHead()->data;
+                line.pop_front
+            }
+        }
 
     
     return 0;
