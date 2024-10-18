@@ -1,0 +1,7 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/jz/Work/CS210/Midterm-2/210-midterm-starter'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003F64, symSize: 0x38 }
+  - { offsetInCU: 0x2E00, offset: 0x2E00, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003F64, symSize: 0x38 }
+...
